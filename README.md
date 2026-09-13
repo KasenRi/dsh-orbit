@@ -59,6 +59,7 @@ dsh plugin --profile web add github:KasenRi/dsh-orbit
 ```
 
 The canonical source monorepo also keeps versioned GitHub Release tarballs for manual or offline installation.
+
 ## Usage
 
 The `orbit_controller` tool drives the run:
