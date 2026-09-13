@@ -1,6 +1,6 @@
 {
   "name": "@kasenri/dsh-orbit",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "description": "Deterministic engineering orchestration for DeepSeek Harness with Commander, Executor, Smart Watchdog, bounded recovery and durable execution state.",
   "license": "MIT",
@@ -29,6 +29,7 @@
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
+    "./client": "./lib/client.js",
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
@@ -44,6 +45,14 @@
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-model-selection"
+      ]
     }
   },
   "peerDependencies": {
