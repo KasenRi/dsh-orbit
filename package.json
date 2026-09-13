@@ -1,0 +1,61 @@
+{
+  "name": "@kasenri/dsh-orbit",
+  "version": "0.4.0",
+  "type": "module",
+  "description": "Deterministic engineering orchestration for DeepSeek Harness with Commander, Executor, Smart Watchdog, bounded recovery and durable execution state.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KasenRi/dsh-orbit-browser-plugins.git"
+  },
+  "homepage": "https://github.com/KasenRi/dsh-orbit-browser-plugins/tree/main/packages/orbit#readme",
+  "bugs": {
+    "url": "https://github.com/KasenRi/dsh-orbit-browser-plugins/issues"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "orbit",
+    "engineering-orchestration",
+    "agent-orchestration",
+    "autonomous-engineering",
+    "bounded-loop",
+    "workflow"
+  ],
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-agent": "^0.1.5-rc.2",
+    "@deepseek-ai/dsh-commands": "^0.1.5-rc.2",
+    "@deepseek-ai/dsh-llm": "^0.1.5-rc.2",
+    "@deepseek-ai/dsh-subagent": "^0.1.5-rc.2",
+    "@deepseek-ai/dsh-tools": "^0.1.5-rc.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-commands": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-llm": {
+      "optional": true
+    }
+  }
+}
