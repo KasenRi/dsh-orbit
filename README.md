@@ -1,6 +1,6 @@
 # @kasenri/dsh-orbit
 
-> This repository is an installable release mirror for @kasenri/dsh-orbit 0.5.6.
+> This repository is an installable release mirror for @kasenri/dsh-orbit 0.5.7.
 > Canonical source: https://github.com/KasenRi/dsh-orbit-browser-plugins/tree/main/packages/orbit
 > Do not develop features here; publish changes from the canonical source monorepo.
 Community plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH).
