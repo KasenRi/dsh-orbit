@@ -1,15 +1,17 @@
 # @kasenri/dsh-orbit
 
-> This repository is an installable release mirror for @kasenri/dsh-orbit 0.5.9.
+> This repository is an installable release mirror for @kasenri/dsh-orbit 0.5.10.
 > Canonical source: https://github.com/KasenRi/dsh-orbit-browser-plugins/tree/main/packages/orbit
 > Do not develop features here; publish changes from the canonical source monorepo.
 Community plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH).
 Not affiliated with or endorsed by DeepSeek.
 
+**让 AI 项目可以在无人监管下持续推进。**
+Orbit 会自动规划任务、分工执行、逐步检查并继续完成后续工作；不同环节可以使用不同模型，让低成本模型承担执行任务、强模型负责规划和审核，从而降低整体 AI 使用成本。Watchdog 还会监控运行异常，在任务卡死或中断时协助恢复。
+
 **Orbit — Deterministic Engineering Orchestration for DeepSeek Harness**
 
-Orbit is a deterministic engineering orchestration runtime for DSH, implemented
-as a Cordis plugin:
+Technical integration:
 
 - an `OrbitService` on `ctx.orbit`
 - a model-facing `orbit_controller` tool (`cx_controller` remains a legacy alias)
@@ -103,9 +105,10 @@ provider/model provenance. The parent model and parent tools remain bypassed.
 
 ## Model configuration (Web)
 
-The Orbit model control sits immediately left of the native composer model
-seat (`conversation.input.right` renders before `conversation.input.model`).
-Its button names the Commander's model; the menu edits three roles:
+The Orbit model control is the final entry in `conversation.input.right`, so
+other composer-side controls (for example DSH's rollback control) stay to its
+left while the native `conversation.input.model` seat stays immediately to its
+right. Its button names the Commander's model; the menu edits three roles:
 
 - **Commander** and **Watchdog** pick from the same native model catalog and
   persist into the DSH `orbit` settings namespace (`settings.yaml`). Picking a
@@ -136,6 +139,11 @@ PLAN → EXECUTE → EVALUATE → SUCCESS
 ```
 
 - Only a normally completed Executor step consumes one loop from the budget.
+- Runs without an explicit user/tool budget start from the historical floor of
+  5 loops; after PLAN, Orbit deterministically reserves two extra bounded slots
+  beyond the accepted base plan (`max(5, steps + 2)`, therefore at most 7 for
+  the 1–5-step plan schema). Explicit `approved_loop_count` / `max_loops`
+  values are never enlarged automatically.
 - Corrections are limited per base step and reserve budget for the remaining
   planned steps.
 - Commander decisions are validated in code (`PASS_CURRENT_STEP` /
