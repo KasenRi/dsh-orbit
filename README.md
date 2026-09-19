@@ -1,6 +1,6 @@
 # @kasenri/dsh-orbit
 
-> This repository is an installable release mirror for @kasenri/dsh-orbit 0.5.8.
+> This repository is an installable release mirror for @kasenri/dsh-orbit 0.5.9.
 > Canonical source: https://github.com/KasenRi/dsh-orbit-browser-plugins/tree/main/packages/orbit
 > Do not develop features here; publish changes from the canonical source monorepo.
 Community plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH).
@@ -97,6 +97,9 @@ Orbit supports three activation styles:
 
 All three routes converge on the existing `orbit_controller` tool and
 `OrbitService`; the activation layer never starts a run of its own.
+After a hard-activated run reaches `SUCCESS`, the initiating Session displays
+the Final Commander's user-visible result directly, with the Commander's frozen
+provider/model provenance. The parent model and parent tools remain bypassed.
 
 ## Model configuration (Web)
 
