@@ -1,6 +1,6 @@
 # @kasenri/dsh-orbit
 
-> This repository is an installable release mirror for @kasenri/dsh-orbit 0.6.4.
+> This repository is an installable release mirror for @kasenri/dsh-orbit 0.6.5.
 > Canonical source: https://github.com/KasenRi/dsh-orbit-browser-plugins/tree/main/packages/orbit
 > Do not develop features here; publish changes from the canonical source monorepo.
 Community plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH).
@@ -17,6 +17,8 @@ Orbit 是一个面向 DeepSeek Harness 的**确定性长任务编排器**。它�
 从 v0.6.3 开始，Orbit 增加 **Trusted Execution Evidence**：Supervisor 会从已结算的 DSH `tool/call` + `tool/result` 中确定性提取真实工具结果摘要、exit code 和测试证据，并能识别 `run_code` 内字面 `tools.bash({ command: ... })` 的嵌套 shell 命令。Commander 会明确区分 `[TRUSTED_TOOL_EVENTS]` 和 `[EXECUTOR_SUMMARY_UNVERIFIED]`，避免已经有真实 stdout / exit code / test summary 时仍重复申请 shell 或要求 Executor 把证据写入临时文件。
 
 从 v0.6.4 开始，Watchdog 变为 **Heartbeat Watchdog**：保留原有 runtime/timeout/guard/strategy 的即时触发，同时默认每 120 秒主动巡检一次 Commander、Executor 或 MoA 活跃阶段。Heartbeat one-shot 不继承自己的历史，不消耗 loop，不占 runtime Watchdog cap；Supervisor 会记录 meaningful progress 和事件年龄，并用状态指纹丢弃 stale Watchdog 决策。最终关闭也必须经过 `FINAL_VERIFY → FINAL_AUDIT → TERMINAL_CONFIRM`：只有 Final Watchdog 批准、Commander 真正调用 `orbit_run_complete({ signal: "COMPLETE" })`，且 Supervisor 的机械关闭条件全部满足，Run 才进入 `SUCCESS / CLOSED`。
+
+v0.6.5 修复真实 Web Profile Live Apply 发现的 Session 持久化兼容问题：当前 DSH 尚未给第三方插件开放 `Session.append()` 的 `ignorable: true` envelope 写入接口，因此未知的 `orbit/runtime` 自定义事件会让冷读取 reader 拒绝整个 Session。Orbit 现在只在 Harness 原生识别 `orbit/runtime` 时才写该事件；否则跳过 Session runtime projection，以 `<project>/.cx/state.json` 继续作为唯一权威 durable state，避免污染聊天 Session。
 
 ## 核心能力
 
